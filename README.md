@@ -7,7 +7,6 @@
 - 仮想環境の管理: Poetry は自動的にプロジェクト専用の仮想環境を作成し、プロジェクトごとに隔離された環境を提供します。これにより、異なるプロジェクト間での依存関係の衝突を防ぎます。
 - 簡単な依存関係の追加と削除: 新しい依存関係を追加する際、Poetry は自動的に最適なバージョンを解決し、pyproject.toml と poetry.lock を更新します。依存関係の削除も同様に簡単です。
 - バージョン解決と互換性の保証: Poetry は依存関係のバージョンを解決し、互換性のあるバージョンを選択するための強力なアルゴリズムを使用します。
-- スクリプト: npm の scripts に相当する機能があります。
 
 ## 仮想環境に関する機能
 
@@ -75,57 +74,7 @@ poetry publish --username __token__ --password <APIトークン>
 
 これらの手順に従って、Poetryを使用してPythonパッケージを効率的に作成し、PyPIに公開することができます。
 
-## Poetry スクリプト
 
-Poetryには Node.js の npm における scripts 機能に相当する機能があります。
-これは pyproject.toml ファイル内で設定され、コマンドラインから簡単に実行できるスクリプトやタスクを定義することができます。
-
-pyproject.toml ファイルの編集: プロジェクトのルートにある pyproject.toml ファイルを開きます。
-
-スクリプトの追加: [tool.poetry.scripts]セクションを作成し、実行したいスクリプトを、以下の形式で追加します：
-
-```
-[tool.poetry.scripts]
-watch = "your_module:your_function"
-```
-
-ここで、"your_module:your_function" は Python モジュールと関数を指定します。この関数はコマンドラインから直接実行されます。
-
-Poetryの[tool.poetry.scripts]セクションを使用して、Flask アプリケーションのためのスタートアップスクリプトを定義することができます。
-このスクリプトは、Flask アプリケーションを含むモジュールを指定し、そのモジュール内で定義されたアプリケーションインスタンスを起動するために使われます。
-
-以下は、src/app.py にある Flask アプリケーションを起動するための pyproject.toml ファイル内の設定例です。
-
-まず、src/app.py に Flask アプリケーションが以下のように定義されていると仮定します：
-
-```
-# src/app.py
-from flask import Flask
-
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return "Hello, World!"
-
-if __name__ == '__main__':
-    app.run(debug=True)
-```
-
-次に、pyproject.toml にスクリプトを追加します：
-
-```
-[tool.poetry.scripts]
-start-flask = "src.app:app.run"
-```
-
-この設定では、src.app がモジュール（src/app.pyに対応）で、app.run が Flask アプリケーションを起動する関数です。
-
-このスクリプトを実行するには、以下のコマンドを使用します：
-
-```
-poetry run start-flask
-```
 
 このコマンドは、pyproject.toml で定義されたスクリプトを通じてFlaskアプリケーションを起動します。
 Flask がデフォルトで使用するポート（通常は5000）で Webサーバが起動し、ブラウザからアクセスできるようになります。
